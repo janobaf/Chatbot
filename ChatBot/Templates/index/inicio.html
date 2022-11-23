@@ -1,0 +1,109 @@
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigzin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+    <style>
+      #scroll{
+          border:1px solid;
+          height:50%;
+          width:40%;
+          overflow-y:scroll;
+          overflow-x:hidden;
+      }
+      </style>
+
+    <title>Document</title>
+</head>
+<body>
+
+
+<div style="position: relative; left: 80%;">
+
+  <div style="width: 70px;">
+    <img  class="circular--square" style="right: 1012%;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPeCZ042WE1kljcGb6kyidBNNn_fpoBSs_xeL3L0fNg&s" alt="">  
+  </div>
+
+  <div style="position:relative;top:-40px;left: 80px;">
+    <a style="font-size: 15px;color:red;" href="#">{{user}}</a>
+    <form action="{% url 'usuarios_app:Cerrar-user' %}" method="get">
+      <button type="submit" class="submit success button" >cerrar sesion</button>
+    </form>
+  </div>
+  
+<div>
+
+
+  <div style="position: relative;left: 0%;top: -20px;"> 
+    <button class="submit success button" >
+      <a href="{% url 'respuestas_app:registrar-respuestas'  %}"> Crear respuestas</a>
+    </button>
+
+  </div>
+</div>
+
+ 
+</div>
+    <div>
+      <center>
+        <div id="scroll">
+          
+          {% for r in rpt  %}
+          <div style="width: 80%;">
+            <div class="container darker">
+                <p>{{r.pregunta}}</p>
+              </div>
+            </div>
+
+          <div style="width: 80%;" >
+
+            <div class="container">
+              <img src="{{r.respuesta.imagen.url}}"   alt="Avatar">
+              <p>{{r.respuesta.respuesta}}</p>
+              
+              {% if r.respuesta.musica %}
+              <audio src="{{r.respuesta.musica.url}}" preload="none" controls></audio>
+                
+              {% endif %}
+                
+
+            </div>
+            
+
+          </div>
+
+          {% endfor %}
+        
+            
+          
+        </div>
+
+
+      </center>
+    
+      <div style="position: relative;left: 13%;top: 20px;">
+      <form action="{% url 'inicio_app:pregunta' %}" method="POST"> {% csrf_token %}
+
+          <Label>
+
+            <div class="grid-container">
+              <div class="grid-x grid-padding-x">
+                <div class="medium-6 cell">
+                  <label>
+                    <input type="text"  name="pregunta" id="pregunta"  placeholder=".medium-6.cell">
+                  </label>
+                </div>
+                <button class="submit success button">guardar</button>
+
+          </Label>
+
+        </form>
+      
+    </div>
+</body>
+</html>
